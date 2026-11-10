@@ -75,7 +75,9 @@ Agent 调用工具提交任务、查询进度，并在完成后取回视频。
 教程所用 Linux / Python 3.12 环境，在服务器终端执行以下命令：
 
 ```bash
-cd /root/sj-tmp && curl -fL --retry 3 https://github.com/khons001/comfy-direct/releases/download/v0.1.2/video-server-install.run -o video-server-install.run && echo '91871405a928b63f5de8ae2c12f101ca86d42cf5e83f3440908aa9fde2e4f6a8  video-server-install.run' | sha256sum -c - && bash video-server-install.run
+mkdir -p /root/sj-tmp && cd /root/sj-tmp && curl -fL --retry 3 https://github.com/khons001/comfy-direct/releases/download/v0.1.2/video-server-install.run -o video-server-install.run && echo '91871405a928b63f5de8ae2c12f101ca86d42cf5e83f3440908aa9fde2e4f6a8  video-server-install.run' | sha256sum -c - && bash video-server-install.run
 ```
 
 安装目录为 `/root/sj-tmp/video-demo/ComfyUI`。安装包内含源码和下载清单，运行时会下载所需模型。
+
+教程使用算家云数据盘路径 `/root/sj-tmp`。其他平台请先确认数据盘挂载目录，同时调整下载路径和安装器的 `--root` 参数；创建目录本身不会创建或挂载数据盘。
