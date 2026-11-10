@@ -1,0 +1,11 @@
+{
+  "先看这里.txt": "515f5e4f6134db94ec0afd9033c189786e091e69e9ad8631c004091bef7fa951",
+  "安装通用MCP-Mac.sh": "dc7790e38c1b518a83b422e6d0f0816f51627c1ca6fea05f5bba60ef6968eef5",
+  "安装通用MCP-Windows.ps1": "d9a3d8af73d95d689cb57fce3165a9c2be155b2ccf4148a894ab6e7930a901b8",
+  "通用MCP协议验证.json": "c459bd048e5af63778f9e2905d33dc93f83ac87be5344b632bf3fabe11f79cd8",
+  "验证范围.txt": "122307a153d36f7e03912a4fd4ff795b3ccaa6f5bd3e91baa7ba77208ddc43b9",
+  "setup/manage-mac.sh": "05f154f71d7f4b05f848a7280477bf8a12551231d2d766cb21689439af008616",
+  "setup/manage-windows.ps1": "d459f9c4fdd0d6031343f2d561dae412cefb772a91d594e7d4954a2de3f0782e",
+  "setup/prepare-mac.sh": "61a9c381d9a67a0ecbeecae59e0d5ff7ffd8c10853ddd5b8e86f3496fc9f842d",
+  "setup/prepare-windows.ps1": "8da25397199c5e0daddc23b3095267be76d10246a2ad8ebb647ccad0a83358f3"
+}

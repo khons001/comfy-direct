@@ -1,0 +1,15 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "comfy-direct-mac",
+  "version": "0.1.2",
+  "description": "Desktop ComfyUI video tools with persistent jobs and original/HD retrieval. Requires initial local setup and your own ComfyUI server.",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Comfy Direct · Mac",
+        "shortDescription": "上传参考图，生成视频并取回 H3 原片与 SeedVR2 高清版",
+        "category": "Productivity"
+      }
+    }
+  }
+}

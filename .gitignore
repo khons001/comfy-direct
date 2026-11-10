@@ -1,0 +1,5 @@
+data/
+runtime/
+*.log
+.env
+.DS_Store

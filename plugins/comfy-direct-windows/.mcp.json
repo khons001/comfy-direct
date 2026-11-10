@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "comfy_direct": {
+      "command": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-File",
+        "${PLUGIN_ROOT}/scripts/launch.ps1",
+        "mcp"
+      ]
+    }
+  }
+}

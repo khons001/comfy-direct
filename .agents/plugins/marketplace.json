@@ -1,0 +1,32 @@
+{
+  "name": "comfy-direct-personal",
+  "interface": {
+    "displayName": "Comfy Direct 个人插件"
+  },
+  "plugins": [
+    {
+      "name": "comfy-direct-windows",
+      "source": {
+        "source": "local",
+        "path": "./plugins/comfy-direct-windows"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "comfy-direct-mac",
+      "source": {
+        "source": "local",
+        "path": "./plugins/comfy-direct-mac"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

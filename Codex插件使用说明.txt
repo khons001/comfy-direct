@@ -1,0 +1,65 @@
+Comfy Direct 个人插件包 0.1.2
+
+入口选择
+本目录是 Codex 专用插件入口，使用此安装脚本才需要 Codex CLI。
+不使用 Codex 的用户请选择单独的 Comfy-Direct通用MCP包，通用安装不需要 Codex 或 Codex CLI。
+
+这是什么
+让支持本地工具的 Agent 调用自己的 ComfyUI，上传参考图、生成视频、查询进度、取回 H3 原片及 SeedVR2 高清版。
+Windows 和 Mac 使用相同核心，只是启动入口不同；核心同时保留通用 MCP 与命令行形式。
+本包按 OpenAI 官方插件格式提供插件清单和本地插件市场目录。
+参考：https://developers.openai.com/plugins/build/plugins
+本地 MCP 说明：https://developers.openai.com/plugins/deploy/desktop-only
+
+当前状态
+已完成：Windows 独立配置安装、Codex 插件识别、从已安装缓存启动 MCP、7 个工具发现、任务列表读取、重复安装和卸载保留数据。
+核心此前已真实完成 RTX 4090 的 H3 + SeedVR2 生成及自动取回。
+本轮没有连接云端，也没有生成视频；插件包装后的 GPU 端到端验收留到下一次开机。
+Mac 已完成清单识别和脚本语法检查，尚未通过 Mac 真机安装测试。
+这是可供本地安装的个人插件包，GitHub 仓库：https://github.com/khons001/comfy-direct；尚未上架官方目录。
+此说明面向新用户。项目维护者已将自己的配置迁移为插件；具体迁移状态另见插件迁移完成记录。
+
+开始使用（Windows）
+1. 把整个压缩包解压到准备长期保留的文件夹，不要只取出某一个脚本。
+2. 需要已安装支持 plugin 命令的 Codex CLI；只装桌面应用不一定具备这个命令。
+3. 在解压文件夹空白处右键，选择“在终端中打开”。运行：
+   .\安装插件-Windows.ps1
+4. 首次配置会提示粘贴平台提供的 SSH 命令，不包含密码。连接窗口出现后输入 root 密码，输入时不显示字符。
+5. 保持连接窗口打开，重新加载 Codex 插件或在新聊天中使用。
+只想离线安装、不连接服务器：加 -NoConnect。仅准备本地运行环境：加 -PrepareOnly。
+服务器关闭时可以完成安装准备，生成视频需要服务器开启 GPU。
+脚本不会启动付费实例或充值。不要为了执行脚本关闭系统安全检查。
+
+已有独立 comfy_direct 的用户
+默认会提醒已有连接并停止插件安装，避免两套工具重复出现。
+明确选择迁移时运行：.\安装插件-Windows.ps1 -ReplaceStandalone -NoConnect
+脚本先备份 Codex 配置、成功安装插件，再移除同名独立 MCP 注册；不会删除任务、视频或其他 MCP。
+本次没有对你的真实配置执行迁移。
+
+之后每次使用
+服务器开机后运行 .\连接服务器-Windows.ps1，输入密码，保持窗口打开。
+如果平台 SSH 端口变化，先运行 .\更新连接-Windows.ps1 粘贴新命令，再打开连接脚本。
+向 Agent 提供参考图并说明故事、时长、是否高清放大即可。默认正式参数为 0.6MP、10秒、turbo=false。
+参考图必须能被本地程序读取；生成需要已部署匹配模型与节点的 ComfyUI。该插件不会替代云端部署。
+
+Mac（待真机验证）
+打开终端，输入 bash 后拖入“安装插件-Mac.sh”文件并回车；需要 Codex CLI。
+安装后用同样方式运行“连接服务器-Mac.sh”。SSH 地址变化时先运行“更新连接-Mac.sh”。
+旧独立 MCP 迁移目前只提供 Windows 自动入口，Mac 遇到旧连接会保留并停止，不自动改写。
+
+数据与更新
+Windows 默认：%LOCALAPPDATA%\CodexComfyDirect\data
+Mac 默认：~/Library/Application Support/CodexComfyDirect/data
+任务和连接配置存在这里，不放在插件缓存里；密码不会写入配置。
+插件更新或卸载不会自动删除这里的视频和记录。保留整个解压目录作为本地插件源。
+COMFY_DIRECT_HOME 可用于高级用户指定自己的数据根目录；应确保安装器和客户端继承同一环境变量。
+
+其他 Agent
+运行“导出通用MCP配置-Windows.ps1”，复制输出的 JSON 到支持本地 stdio MCP 的客户端。
+它使用当前解压目录的实际路径，因而保留该目录。不要把你的实际 SSH 配置随包分享。
+DeepSeek 可以是 Agent 使用的模型；能否接入本地工具取决于具体客户端，不代表 DeepSeek 官网聊天直接支持此插件。
+
+后续分发
+GitHub：本目录可以作为仓库根目录；提交整个目录，包括 .agents 和 plugins。实际仓库建立后再写入真实安装地址。
+个人网站：可以提供此 ZIP 和说明供下载。此 ZIP 下载地址不是 Git 插件市场地址。
+还未选定发布者名称、仓库或公开许可，也未做公开上架；这些不影响本地测试。

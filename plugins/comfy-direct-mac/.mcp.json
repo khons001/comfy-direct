@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "comfy_direct": {
+      "command": "/bin/bash",
+      "args": [
+        "${PLUGIN_ROOT}/scripts/launch.sh",
+        "mcp"
+      ]
+    }
+  }
+}
