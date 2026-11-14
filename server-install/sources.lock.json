@@ -1,0 +1,16 @@
+[
+  {
+    "name": "comfyui",
+    "file": "sources/validated-comfyui.zip",
+    "source_url": "snapshot of existing successful server /root/sj-tmp/ComfyUI",
+    "sha256": "1c5709df5d3b96e1be9cb6be4d7edfd5a17f680b3b7beecbc201889a59fa72f2",
+    "bytes": 13259582
+  },
+  {
+    "name": "seedvr2",
+    "file": "sources/validated-seedvr2.zip",
+    "source_url": "snapshot of existing successful server /root/sj-tmp/ComfyUI/custom_nodes/ComfyUI-SeedVR2",
+    "sha256": "57f1adffff736d08c492a8ab13651216f2c330d670b582011907e6c2ec58bf10",
+    "bytes": 4841215
+  }
+]

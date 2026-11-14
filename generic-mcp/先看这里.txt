@@ -1,27 +1,18 @@
-Comfy Direct 通用 MCP 包
+Comfy Direct 通用 MCP · v0.1.3
 
-不需要安装 Codex 或 Codex CLI。本包准备独立本地工具，并导出标准 stdio MCP 配置。
-需要一个支持本地 stdio MCP 的 Agent 客户端；它可以使用 DeepSeek 或其他模型。
-仅有模型 API 或网页聊天账号，不等同于有本地 MCP 客户端。具体客户端需另行实测。
+无需安装Codex或Codex CLI。仅支持本地stdio MCP的Agent客户端；普通网页聊天或只支持远程MCP URL的客户端不能直接接入。
 
-Windows
-1. 解压整个包，在文件夹打开 PowerShell，运行 .\安装通用MCP-Windows.ps1。
-2. 首次提示时，粘贴自己的服务器 SSH 命令，不含密码。
-3. 安装完成后会显示 mcp-client.json 的位置。默认在 %LOCALAPPDATA%\ComfyDirect。
-4. 在所用客户端添加本地 MCP 服务，填入该文件的 command、args、env；界面/配置格式以该客户端为准。不要直接覆盖已有配置文件。
-5. 服务器开启后，在安装目录运行 .\管理连接.ps1，输入服务器密码并保持窗口打开。
-6. SSH地址或端口变化时，先运行 .\管理连接.ps1 -Action configure，再打开连接。
-离线准备可以加 -PrepareOnly；此时还未填写实际SSH地址，使用前需configure。
-高级参数：-Destination 指定本地目录；-Endpoint 指定已有ComfyUI接口；-ForcePortableRuntime 强制准备便携Node。
+Windows：在解压目录执行 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\安装通用MCP-Windows.ps1
+Mac：在解压目录执行 bash 安装通用MCP-Mac.sh
 
-Mac（未做真机验证）
-打开终端，输入 bash 后拖入安装通用MCP-Mac.sh 并运行。
-默认目录 ~/Library/Application Support/ComfyDirect。向客户端添加生成的 mcp-client.json。
-服务器开机后，在该目录执行 bash manage.sh connect；更换连接使用 bash manage.sh configure。
+按提示填自己的SSH命令、实际ComfyUI目录和服务端口；密码在连接窗口输入。本地端口会避开占用。
+安装后将生成的mcp-client.json按客户端格式合并，保留其他工具；文件中的路径由本机安装时生成，不能照抄他人的配置。
+Windows默认安装目录%LOCALAPPDATA%\ComfyDirect，Mac默认~/Library/Application Support/ComfyDirect。
+连接：Windows运行安装目录中的管理连接.ps1；Mac运行bash manage.sh connect。
 
-配置和数据
-只在安装目录存放工具、连接配置和任务记录。密码由SSH窗口读取，不写入配置。
-不会自动购买算力、开启服务器、安装Codex、注册Codex工具或发送视频生成任务。
-首次准备Node需要网络下载；包不包含GPU、模型权重或云端ComfyUI部署。
-可用环境：Windows本地通用MCP已测试；Mac只做语法检查；DeepSeek客户端尚未选定和实测。
-此前GPU成功属于同一核心在Codex链路下的测试，不能据此声称DeepSeek完整流程已通过。
+Windows参数：-SshCommand、-RemoteRoot、-RemotePort、-LocalPort auto、-Destination；-PrepareOnly只准备工具。
+Mac参数：--ssh-command、--remote-root、--remote-port、--local-port auto；--prepare-only只准备工具；COMFY_DIRECT_INSTALL_DIR指定目录。
+
+完整教程：https://khons.cloud/comfy-direct.html
+配置读取：安装目录data/config.json；任务和下载：安装目录data/jobs。不要移动安装目录或覆盖已有任务。
+核心源码在server/；安装脚本嵌入相同源码。实际验证范围见验证范围.txt。

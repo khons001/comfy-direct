@@ -1,83 +1,52 @@
-# Comfy Direct
+# Comfy Direct · 通用 MCP
 
-让 AI Agent 调用你的 ComfyUI，从参考图生成视频，并自动取回 H3 原片与 SeedVR2 高清版。
+让支持本地 stdio MCP 的 Agent 调用自己的 ComfyUI，生成并取回 H3 原片与 SeedVR2 高清版。无需安装 Codex 或专属插件，模型由所用客户端配置。
 
-[下载安装包](https://github.com/khons001/comfy-direct/releases/latest)
+[完整部署教程](部署与使用.txt) · [网站教程](https://khons.cloud/comfy-direct.html)
 
-## 功能
+## 一条安装流程
 
-- 上传参考图并提交视频生成任务。
-- 按需求设置提示词、时长、画面比例和高清放大。
-- 查询生成进度，保存任务记录。
-- 自动下载原片与高清版。
-- 通过请求标识避免重复提交，按任务 ID 继续查询和取回结果。
+1. 准备匹配的 NVIDIA GPU / Linux x86_64 / Python 3.12 服务器，取得自己的 SSH 命令。已有环境先检查并复用。
+2. 在服务器运行 Linux 安装器，使用 `--root` 指定真实 ComfyUI 目录。模型约48.3GB，依赖、缓存和视频另占空间；确认数据盘挂载、容量和费用。
+3. 在自己的电脑安装通用 MCP，将生成的 `mcp-client.json` 按客户端格式合并到配置，保留其他工具。
+4. 打开本地连接脚本，用户自行输入密码；工具复用或启动配置目录中的 ComfyUI。先运行 `comfy_check`。
+5. 上传参考图并提交一次任务，按任务ID查询；两版视频下载且播放正常后才算完成。
 
-## 选择安装方式
+## 本地安装
 
-| 安装方式 | 适用场景 | 入口 |
-| --- | --- | --- |
-| 通用 MCP | 支持本地 stdio MCP 的 Agent 客户端 | `generic-mcp/` |
-| Codex 插件 | 使用 Codex 管理和调用工具 | 仓库根目录 |
+唯一的新用户安装入口是 `generic-mcp/`，或同版本通用 MCP ZIP。下载后完整解压，在该目录运行对应脚本：
 
-通用 MCP 方式不要求安装 Codex，模型由你使用的 Agent 客户端配置。Codex 插件安装脚本使用 Codex CLI。
+- Windows：`powershell.exe -NoProfile -ExecutionPolicy Bypass -File ./安装通用MCP-Windows.ps1`
+- Mac（尚未真机验证）：`bash 安装通用MCP-Mac.sh`
 
-## 快速开始
+安装器准备Node并输出实际MCP配置路径。客户端须能启动本地stdio进程、访问本机图片；普通网页聊天、模型API或只接受远程MCP URL的客户端不能直接使用。不同客户端的配置格式与视频展示方式仍需分别适配。
 
-### 1. 准备服务器
+## 路径和端口
 
-准备已安装对应模型、节点和工作流的 ComfyUI 服务器，并取得自己的 SSH 连接信息。
+| 配置项 | 含义 |
+| --- | --- |
+| SSH用户、主机、端口 | 来自使用者自己的平台连接命令 |
+| remote_root | 服务器ComfyUI绝对目录；算家云示例/root/sj-tmp/video-demo/ComfyUI |
+| remote_port | 服务器ComfyUI监听端口，默认8188，可修改 |
+| 本地转发端口 | 默认18190；首次配置避开占用，也可--local-port auto |
+| MCP连接 | stdio，由客户端启动本地程序，不另开公网端口 |
 
-### 2. 安装本地工具
+Windows安装参数：`-SshCommand`、`-RemoteRoot`、`-RemotePort`、`-LocalPort auto`、`-Destination`。Mac对应长参数：`--ssh-command`、`--remote-root`、`--remote-port`、`--local-port auto`。没有服务器时可分别用`-PrepareOnly` / `--prepare-only`只准备工具。
 
-下载并完整解压安装包。你可以让具有本机命令执行权限的 Agent 帮助安装：
+已有直接可访问的ComfyUI可用`--endpoint`，此模式不使用SSH。127.0.0.1:18190是电脑到ComfyUI的转发地址，不是远程MCP URL。
 
-> 请阅读安装包中的使用说明，帮我安装 Comfy Direct，并接入当前客户端。需要服务器连接信息时告诉我，密码由我在本机窗口输入。
+密码不存入配置；任务、引用图片和视频保留在安装目录data/中。更新时保留数据，不要移动安装目录后继续使用旧客户端路径。
 
-也可以手动运行对应安装脚本：
+## 检查与验证范围
 
-| 系统 | 通用 MCP | Codex 插件 |
-| --- | --- | --- |
-| Windows | `安装通用MCP-Windows.ps1` | `安装插件-Windows.ps1` |
-| macOS | `安装通用MCP-Mac.sh` | `安装插件-Mac.sh` |
+comfy_check核对连接、GPU、工作流节点和已注册的模型/枚举选项。缺模型或只有CPU时不会提交新生成。检查通过不能保证显存足够或模型内容完整，最终仍以实际生成、取回、播放验证。
 
-安装脚本会准备本地运行环境。通用 MCP 安装完成后，将生成的 `mcp-client.json` 中的工具配置添加到客户端。
+v0.1.3已验证：Windows隔离目录、便携Node、独立stdio MCP发现7个工具、自定义路径与端口、重复配置保留、CPU/模型缺失拦截。Mac、ARM64和所有Agent客户端未逐个真机验证；本轮没有新租GPU或执行真实GPU视频生成。
 
-### 3. 连接服务器
+旧版专属插件文件仅为已有安装保留兼容，不属于新用户安装流程。不要运行根目录的旧插件安装脚本来安装通用MCP。
 
-按提示填写 SSH 连接命令，在本机连接窗口输入密码，并保持连接窗口打开。服务器地址或端口变化时，更新连接配置。
+## 源码
 
-### 4. 开始生成
-
-向 Agent 提供参考图并描述需求，例如：
-
-> 用这张参考图生成一段 10 秒的雨夜视频，加入轻柔的背景音乐，同时返回 H3 原片和高清放大版。
-
-Agent 调用工具提交任务、查询进度，并在完成后取回视频。
-
-## 运行配置
-
-- 本地运行时：Node.js 22.18 或更高版本，安装脚本可自动准备。
-- 默认本地转发端口：`18190`。
-- 默认服务器 ComfyUI 端口：`8188`。
-- 默认生成参数：10 秒、0.6MP、关闭 Turbo，可按需求和显存调整。
-- 服务器模型和算力由使用者自行准备。
-
-任务记录和视频保存在本地用户数据目录，独立于插件缓存。密码由 SSH 读取，不写入连接配置。
-
-## 使用说明
-
-- [通用 MCP 安装说明](generic-mcp/先看这里.txt)
-- [Codex 插件安装说明](Codex插件使用说明.txt)
-- [版本下载](https://github.com/khons001/comfy-direct/releases)
-
-## 服务器一键安装
-
-教程所用 Linux / Python 3.12 环境，在服务器终端执行以下命令：
-
-```bash
-mkdir -p /root/sj-tmp && cd /root/sj-tmp && curl -fL --retry 3 https://github.com/khons001/comfy-direct/releases/download/v0.1.2/video-server-install.run -o video-server-install.run && echo '91871405a928b63f5de8ae2c12f101ca86d42cf5e83f3440908aa9fde2e4f6a8  video-server-install.run' | sha256sum -c - && bash video-server-install.run
-```
-
-安装目录为 `/root/sj-tmp/video-demo/ComfyUI`。安装包内含源码和下载清单，运行时会下载所需模型。
-
-教程使用算家云数据盘路径 `/root/sj-tmp`。其他平台请先确认数据盘挂载目录，同时调整下载路径和安装器的 `--root` 参数；创建目录本身不会创建或挂载数据盘。
+- generic-mcp/server/：独立MCP核心、连接逻辑和远端启动脚本。
+- generic-mcp/setup/：同版本嵌入包与运行时准备。
+- server-install/：Linux安装器源码、锁定依赖和模型清单。源码归档与wheel在服务器安装包中提供，不随Git重复存放。

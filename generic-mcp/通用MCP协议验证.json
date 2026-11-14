@@ -1,20 +1,13 @@
 {
   "passed": true,
-  "client": "Official MCP SDK; not a model-driven Agent client",
-  "codex_required": false,
-  "tool_count": 7,
-  "mock_cpu_check": true,
-  "no_gpu_prevents_submission": true,
-  "duplicate_request_returns_same_job": true,
-  "persistence_after_client_restart": true,
-  "offline_error_reported": true,
-  "http_requests": [
-    "GET /system_stats",
-    "GET /object_info",
-    "GET /system_stats",
-    "GET /object_info"
+  "tests": [
+    "Custom SSH user/host/port, remote root with spaces, remote ComfyUI port and independent local port",
+    "Repeated configure preserves existing connection; rejects invalid SSH and traversal",
+    "Direct endpoint mode clears SSH and needs no tunnel",
+    "Independent stdio MCP initialize, discover 7 tools, call tool",
+    "Missing model and CPU-only service do not pass generation readiness",
+    "CPU-only job blocked before upload/submission; zero POSTs",
+    "Complete simulated schema passes preflight; not a GPU generation test"
   ],
-  "remote_cloud_contacted": false,
-  "deepseek_tested": false,
-  "real_gpu_generated": false
+  "real_gpu_generation": false
 }

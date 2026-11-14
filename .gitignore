@@ -3,3 +3,7 @@ runtime/
 *.log
 .env
 .DS_Store
+
+server-install/sources/
+server-install/wheels/
+__pycache__/

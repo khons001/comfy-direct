@@ -1,0 +1,13 @@
+{
+  "name": "comfy-direct",
+  "version": "0.1.3",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "start": "node bin.mjs mcp",
+    "check": "node bin.mjs check"
+  }
+}

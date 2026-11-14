@@ -4,6 +4,7 @@ tool_root="$(cd "$(dirname "$0")" && pwd)"
 tool_node="$(cat "$tool_root/runtime-node.txt")"
 export COMFY_DIRECT_CONFIG="$tool_root/data/config.json"
 export COMFY_DIRECT_DATA_DIR="$tool_root/data"
+unset COMFY_DIRECT_ENDPOINT
 case "${1:-connect}" in
  configure) exec "$tool_node" "$tool_root/bin.mjs" configure --wizard;;
  connect|check|list) exec "$tool_node" "$tool_root/bin.mjs" "${1:-connect}";;

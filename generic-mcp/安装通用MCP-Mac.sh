@@ -10,6 +10,8 @@ export COMFY_DIRECT_DATA_DIR="$tool_root/data"
 unset COMFY_DIRECT_ENDPOINT
 if [[ "${1:-}" == '--prepare-only' ]]; then
  :
+elif [[ $# -gt 0 ]]; then
+ "$tool_node" "$tool_root/bin.mjs" configure "$@"
 elif [[ -f "$COMFY_DIRECT_CONFIG" ]]; then
  "$tool_node" "$tool_root/bin.mjs" configure
 else

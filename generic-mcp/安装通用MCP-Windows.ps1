@@ -2,6 +2,9 @@
  [string]$Destination=(Join-Path $env:LOCALAPPDATA 'ComfyDirect'),
  [string]$SshCommand,
  [string]$Endpoint,
+ [string]$RemoteRoot,
+ [string]$RemotePort,
+ [string]$LocalPort,
  [switch]$PrepareOnly,
  [switch]$ForcePortableRuntime
 )
@@ -18,6 +21,9 @@ try {
  $arguments=@('configure')
  if($SshCommand){$arguments+=@('--ssh-command',$SshCommand)}
  if($Endpoint){$arguments+=@('--endpoint',$Endpoint)}
+ if($RemoteRoot){$arguments+=@('--remote-root',$RemoteRoot)}
+ if($RemotePort){$arguments+=@('--remote-port',$RemotePort)}
+ if($LocalPort){$arguments+=@('--local-port',$LocalPort)}
  if(-not $PrepareOnly -and -not $SshCommand -and -not $Endpoint -and -not(Test-Path -LiteralPath $env:COMFY_DIRECT_CONFIG)){$arguments+='--wizard'}
  if(-not $PrepareOnly -or $SshCommand -or $Endpoint -or (Test-Path -LiteralPath $env:COMFY_DIRECT_CONFIG)){
   & $toolNode $entry @arguments
