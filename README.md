@@ -1,22 +1,26 @@
 # Comfy Direct · 通用 MCP
 
-让支持本地 stdio MCP 的 Agent 调用自己的 ComfyUI，生成并取回 H3 原片与 SeedVR2 高清版。无需安装 Codex 或专属插件，模型由所用客户端配置。
+让 Agent 连接自己的 ComfyUI，生成并取回视频。视频用 Codex 演示；安装工具只有一套通用 MCP。
 
-[完整部署教程](部署与使用.txt) · [网站教程](https://khons.cloud/comfy-direct.html)
+[按视频操作的五步教程](https://khons.cloud/comfy-direct.html#downloads) · [完整操作与排错说明](部署与使用.txt)
 
-## 直接交给 Agent
+## 按教学视频的顺序操作
 
-复制下面这段话到有联网、文件和本机命令执行能力的 Agent 中，下载、解压和配置由 Agent 完成：
+1. 租好服务器，设置密码。
+2. 复制平台自己的 SSH 命令，在电脑终端登录服务器。
+3. 在这个服务器窗口安装环境，完成后再运行启动命令，启动 ComfyUI。
+4. 回到 Agent，让它下载安装通用 MCP。
+5. 把自己的 SSH 命令发给 Agent，在连接窗口输入密码；连接检查通过后，发参考图生成视频。
 
-> 请读取 https://khons.cloud/downloads/ComfyDirect-guide-v0.1.3.txt ，按教程从项目 GitHub Release 自动下载并校验通用 MCP 安装包，在我的电脑上解压、安装并接入当前 Agent 客户端。先检查并复用已有环境，向我索取当前 SSH 命令，按实际服务器目录和端口配置连接。需要密码时由我在本机连接窗口输入。完成后检查连接、GPU、节点和模型，再与我确认测试视频需求。
+第 4 步发给 Agent 的话：
 
-## 一条安装流程
+> 请从 https://github.com/khons001/comfy-direct 帮我下载、安装并配置 Comfy Direct 通用 MCP。服务器已经按教程启动，需要服务器连接信息时告诉我，完成后检查工具能否正常调用。
 
-1. 准备匹配的 NVIDIA GPU / Linux x86_64 / Python 3.12 服务器，取得自己的 SSH 命令。已有环境先检查并复用。
-2. 在服务器运行 Linux 安装器，使用 `--root` 指定真实 ComfyUI 目录。模型约48.3GB，依赖、缓存和视频另占空间；确认数据盘挂载、容量和费用。
-3. 让 Agent 从项目 Release 下载并校验通用 MCP 包，在自己的电脑解压、安装，将生成的 `mcp-client.json` 按客户端格式合并到配置，保留其他工具。
-4. 打开本地连接脚本，用户自行输入密码；工具复用或启动配置目录中的 ComfyUI。先运行 `comfy_check`。
-5. 上传参考图并提交一次任务，按任务ID查询；两版视频下载且播放正常后才算完成。
+## 给 Agent 的执行说明
+
+先读取[部署与使用.txt](部署与使用.txt)中的技术说明。第 4 步由 Agent 下载、校验、解压安装包并合并客户端 MCP 配置；尚未取得 SSH 信息时，Windows 使用 `-PrepareOnly`，Mac 使用 `--prepare-only`。第 5 步取得 SSH 后再配置连接，复用用户已经启动的 ComfyUI。不要让用户重复安装服务器，不使用旧专属插件。
+
+下面是安装和排错参考，普通用户按上方五步操作即可。
 
 ## 本地安装
 
