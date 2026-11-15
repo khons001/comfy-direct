@@ -4,17 +4,23 @@
 
 [完整部署教程](部署与使用.txt) · [网站教程](https://khons.cloud/comfy-direct.html)
 
+## 直接交给 Agent
+
+复制下面这段话到有联网、文件和本机命令执行能力的 Agent 中，下载、解压和配置由 Agent 完成：
+
+> 请读取 https://khons.cloud/downloads/ComfyDirect-guide-v0.1.3.txt ，按教程从项目 GitHub Release 自动下载并校验通用 MCP 安装包，在我的电脑上解压、安装并接入当前 Agent 客户端。先检查并复用已有环境，向我索取当前 SSH 命令，按实际服务器目录和端口配置连接。需要密码时由我在本机连接窗口输入。完成后检查连接、GPU、节点和模型，再与我确认测试视频需求。
+
 ## 一条安装流程
 
 1. 准备匹配的 NVIDIA GPU / Linux x86_64 / Python 3.12 服务器，取得自己的 SSH 命令。已有环境先检查并复用。
 2. 在服务器运行 Linux 安装器，使用 `--root` 指定真实 ComfyUI 目录。模型约48.3GB，依赖、缓存和视频另占空间；确认数据盘挂载、容量和费用。
-3. 在自己的电脑安装通用 MCP，将生成的 `mcp-client.json` 按客户端格式合并到配置，保留其他工具。
+3. 让 Agent 从项目 Release 下载并校验通用 MCP 包，在自己的电脑解压、安装，将生成的 `mcp-client.json` 按客户端格式合并到配置，保留其他工具。
 4. 打开本地连接脚本，用户自行输入密码；工具复用或启动配置目录中的 ComfyUI。先运行 `comfy_check`。
 5. 上传参考图并提交一次任务，按任务ID查询；两版视频下载且播放正常后才算完成。
 
 ## 本地安装
 
-唯一的新用户安装入口是 `generic-mcp/`，或同版本通用 MCP ZIP。下载后完整解压，在该目录运行对应脚本：
+唯一的新用户安装入口是 `generic-mcp/`，或同版本通用 MCP ZIP。由 Agent 下载、校验并完整解压，在该目录运行对应脚本：
 
 - Windows：`powershell.exe -NoProfile -ExecutionPolicy Bypass -File ./安装通用MCP-Windows.ps1`
 - Mac（尚未真机验证）：`bash 安装通用MCP-Mac.sh`

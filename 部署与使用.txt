@@ -1,7 +1,9 @@
 Comfy Direct · 通用 MCP 部署与使用（v0.1.3）
 
+用户只需复制下面这段话给 Agent；教程和安装包均由 Agent 获取，无需先手动下载。
+
 把这份教程交给你的 Agent，并告诉它：
-请按教程检查我的电脑和服务器，安装通用 MCP 并接入当前客户端。先复用已有环境，缺什么再安装。向我索取当前 SSH 命令，记录实际服务器目录和端口；密码由我在本机连接窗口输入。先检查连接、GPU、节点和模型，再提交一次测试任务，不重复生成。
+请读取 https://khons.cloud/downloads/ComfyDirect-guide-v0.1.3.txt ，按教程从项目 GitHub Release 自动下载并校验通用 MCP 安装包，在我的电脑上解压、安装并接入当前 Agent 客户端。先检查并复用已有环境，向我索取当前 SSH 命令，按实际服务器目录和端口配置连接。需要密码时由我在本机连接窗口输入。完成后检查连接、GPU、节点和模型，再与我确认测试视频需求。
 
 适用范围
 本地工具需要支持本地 stdio MCP、可访问本机文件的 Agent 客户端。让 Agent 代为安装，还需要本机命令执行能力。仅有模型 API 或普通网页聊天账号不够；只支持远程 MCP URL 的客户端不能直接填写本包配置。不同客户端共用同一套工具，模型由客户端配置。
@@ -31,13 +33,16 @@ mkdir -p /root/sj-tmp && cd /root/sj-tmp && curl -fL --retry 3 https://github.co
 若提示缺少venv/ensurepip：Debian/Ubuntu可在服务器安装python3.12-venv，或使用带完整Python3.12的镜像。安装器不会替换系统Python。若下载失败，保留原目录和错误记录，修复网络后重试。
 如环境不是Python3.12、Linux x86_64或没有匹配GPU/驱动，先处理环境问题，不强行继续。源码、依赖清单、模型清单都在安装器展开目录内。
 
-3. 在自己的电脑安装通用 MCP
-操作位置：你的电脑，不是GPU服务器。
+3. 让 Agent 下载并安装通用 MCP
+执行者：Agent。操作位置：用户自己的电脑，不是GPU服务器。
 
-下载并完整解压：
+Agent 先读取本教程、检查当前系统及客户端是否支持本地 stdio MCP，再从以下项目 GitHub Release 地址下载安装包，校验后完整解压到本机工作目录。用户不需要先手动下载：
 https://github.com/khons001/comfy-direct/releases/download/v0.1.3/comfy-direct-generic-mcp-v0.1.3.zip
+SHA256：60bde2de2c172015357d5be3e6f980046c7fd2ad0e1da6c70384f52e9b4a2ec5
 
-Windows：在解压目录打开PowerShell，执行：
+下载失败时报告具体网络错误，修复后重试；校验失败不执行安装。以下命令由 Agent 根据本机系统在解压目录执行。
+
+Windows：
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\安装通用MCP-Windows.ps1
 
 此参数只作用于本次脚本进程，不修改系统执行策略。公司设备若策略禁止执行，应按设备管理要求处理。
@@ -45,8 +50,8 @@ Mac：在解压目录执行：
 bash 安装通用MCP-Mac.sh
 
 安装器会复用符合要求的Node，或从Node官方站点下载并校验便携运行时。无需安装Codex或Codex CLI。
-按提示填写自己的SSH命令、服务器ComfyUI绝对目录和服务端口。算家云示例目录是/root/sj-tmp/video-demo/ComfyUI，服务端口默认8188；换平台就填自己的实际值。本地转发端口自动选择，默认18190被占用时会选其他空闲端口。
-安装后读取安装器输出的mcp-client.json，将其中command、args、env按当前客户端的配置格式合并，保留其他MCP工具。它引用的是在这台电脑实际生成的路径，不要复制作者或别人的mcp-client.json。
+Agent 使用用户提供的SSH命令、核实的服务器ComfyUI绝对目录和服务端口填写安装参数，缺少信息时再询问用户。算家云示例目录是/root/sj-tmp/video-demo/ComfyUI，服务端口默认8188；换平台就填自己的实际值。本地转发端口自动选择，默认18190被占用时会选其他空闲端口。
+安装后由 Agent 读取安装器输出的mcp-client.json，将其中command、args、env按当前客户端的配置格式合并，保留其他MCP工具。它引用的是在这台电脑实际生成的路径，不要复制作者或别人的mcp-client.json。
 默认安装目录：Windows为%LOCALAPPDATA%\ComfyDirect；Mac为~/Library/Application Support/ComfyDirect。不能安装后移动该目录。需要换目录时重新安装并更新客户端配置。
 成功标志：重新加载客户端后可发现comfy_check等7个工具。
 
